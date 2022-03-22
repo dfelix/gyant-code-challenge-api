@@ -45,7 +45,7 @@ export class CasesRepository {
     user: User,
     condition: Condition,
   ): Promise<Evaluation> {
-    const c = await this.caseModel.findOne({ _id: id });
+    const data = await this.caseModel.findOne({ _id: id });
 
     const evaluation: Evaluation = {
       evaluatedBy: user.id,
@@ -53,11 +53,9 @@ export class CasesRepository {
       evaluatedAt: new Date(),
     };
 
-    console.log(evaluation);
+    data.set('evaluation', evaluation);
 
-    c.set('evaluation', evaluation);
-
-    await c.save();
+    await data.save();
 
     return evaluation;
   }

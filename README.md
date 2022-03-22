@@ -27,6 +27,7 @@ yarn install
 ```
 
 - Open `database/docker-compose.yml` and on `volumes` put the path to the folder database
+
 - Create the database with `docker-compose up -d`
 
 - Once the database is running on a docker container run `npm i`
@@ -34,3 +35,15 @@ yarn install
 - Run `node seed-data` to seed database with mock data.
 
 - Build and run the project
+
+# Mock Data
+
+```
+users:
+
+ghouse@gyant.com
+jdorian@gyant.com
+cyang@gyant.com
+
+(passwords same as email)
+```
