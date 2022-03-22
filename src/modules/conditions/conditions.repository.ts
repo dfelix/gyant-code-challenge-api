@@ -10,12 +10,20 @@ export class ConditionsRepository {
     @InjectModel('Condition') private conditionModel: Model<ConditionDocument>,
   ) {}
 
-  async findAll(userFilterQuery: FilterQuery<Condition>): Promise<any[]> {
+  async findAll(conditionsFilterQuery: FilterQuery<Condition>): Promise<any[]> {
     const items = await this.conditionModel
-      .find(userFilterQuery)
+      .find(conditionsFilterQuery)
       .lean({ virtuals: true });
     return items.map((u: Partial<Condition>) => {
       return new Condition(u);
     });
+  }
+
+  async findOne(userFilterQuery: FilterQuery<Condition>): Promise<Condition> {
+    const item = await this.conditionModel
+      .findOne(userFilterQuery)
+      .lean({ virtuals: true });
+    if (item && Object.keys(item).length > 0) return new Condition(item);
+    return;
   }
 }

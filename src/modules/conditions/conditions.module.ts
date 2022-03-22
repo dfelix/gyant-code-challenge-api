@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConditionsService } from './conditions.service';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConditionsController } from './conditions.controller';
 import { ConditionsRepository } from './conditions.repository';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConditionsService } from './conditions.service';
 import { ConditionSchema } from './schemas/condition.schema';
 
 @Module({
@@ -11,5 +11,6 @@ import { ConditionSchema } from './schemas/condition.schema';
   ],
   controllers: [ConditionsController],
   providers: [ConditionsService, ConditionsRepository],
+  exports: [ConditionsService],
 })
 export class ConditionsModule {}

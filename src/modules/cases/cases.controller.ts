@@ -1,17 +1,19 @@
 import {
+  Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
-  Body,
-  Patch,
   Param,
   Post,
+  UseGuards,
   UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CasesService } from './cases.service';
 import { EvaluationDto } from './dto/evaluation.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(JwtAuthGuard)
 @Controller('cases')
 export class CasesController {
   constructor(private readonly casesService: CasesService) {}
@@ -31,13 +33,8 @@ export class CasesController {
     return this.casesService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCaseDto: UpdateCaseDto) {
-  //   return this.casesService.update(+id, updateCaseDto);
-  // }
-
   @Post(':id/evaluate')
-  evaluate(@Param('id') id: string, @Body() updateCaseDto: EvaluationDto) {
-    return this.casesService.evaluate(id, updateCaseDto);
+  evaluate(@Param('id') id: string, @Body() evaluation: EvaluationDto) {
+    return this.casesService.evaluate(id, evaluation);
   }
 }

@@ -8,4 +8,8 @@ export class ConditionsService {
   findAll() {
     return this.conditionsRepository.findAll({});
   }
+
+  findOne(code: string) {
+    return this.conditionsRepository.findOne({ code });
+  }
 }

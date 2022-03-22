@@ -12,6 +12,9 @@ export class User {
   @Expose()
   email?: string;
 
+  @Expose()
+  name?: string;
+
   password?: string;
 
   @Expose()

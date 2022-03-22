@@ -1,4 +1,5 @@
 import { Exclude, Expose } from 'class-transformer';
+import { Evaluation } from './evaluation.entity';
 
 @Exclude()
 export class Case {
@@ -17,4 +18,7 @@ export class Case {
 
   @Expose()
   updatedAt?: Date;
+
+  @Expose()
+  evaluation?: Evaluation;
 }

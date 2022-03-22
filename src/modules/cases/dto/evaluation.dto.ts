@@ -1,8 +1,11 @@
-import { IsString } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 
 export class EvaluationDto {
   @IsString()
-  doctor: string;
+  code: string;
+
+  // @IsUUID()
   @IsString()
-  label: string;
+  @Length(24)
+  evaluatedBy: string;
 }

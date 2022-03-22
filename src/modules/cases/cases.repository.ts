@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
+import { Condition } from '../conditions/entities/condition.entity';
+import { User } from '../users/entities/user.entity';
 import { Case } from './entities/case.entity';
+import { Evaluation } from './entities/evaluation.entity';
 import { CaseDocument } from './schemas/case.schema';
 
 @Injectable()
@@ -35,5 +38,27 @@ export class CasesRepository {
       .lean({ virtuals: true });
     if (item && Object.keys(item).length > 0) return new Case(item);
     return;
+  }
+
+  async evaluate(
+    id: string,
+    user: User,
+    condition: Condition,
+  ): Promise<Evaluation> {
+    const c = await this.caseModel.findOne({ _id: id });
+
+    const evaluation: Evaluation = {
+      evaluatedBy: user.id,
+      condition: condition.code,
+      evaluatedAt: new Date(),
+    };
+
+    console.log(evaluation);
+
+    c.set('evaluation', evaluation);
+
+    await c.save();
+
+    return evaluation;
   }
 }
